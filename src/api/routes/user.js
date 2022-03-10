@@ -68,7 +68,7 @@ export default (app) => {
 
             const inputData = req.body;
             let id = req.user.id;
-            //if(req.user.password === 
+
             const model = Container.get('User');
             const instance = new userService(model, logger);
 
@@ -169,4 +169,5 @@ export default (app) => {
             return next(e);
         }
     });
+
 };

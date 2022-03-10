@@ -207,5 +207,25 @@ export default {
             offset: Joi.number().optional(),
             any: Joi.string().optional()
         }
-    })
+    }),
+    // ------------------- Vehicle --------------- //
+    postVehicle: celebrate({
+        body: Joi.object({
+            vehicleType: Joi.string().min(2).max(25).required(),
+            vehicleName: Joi.string().min(2).max(25).required(),
+            vehicleNumber: Joi.string().min(1).max(15).optional(),
+            vehicleModel: Joi.number().optional(),
+        })
+    }),
+    updateVehicle: celebrate({
+        body: Joi.object({
+            vehicleType: Joi.string().min(2).max(25).required(),
+            vehicleName: Joi.string().min(2).max(25).required(),
+            vehicleNumber: Joi.string().min(1).max(15).optional(),
+            vehicleModel: Joi.number().optional(),
+        }),
+        params: {
+            id: Joi.number().required()
+        }
+    }),
 };

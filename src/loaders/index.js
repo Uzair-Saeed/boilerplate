@@ -37,6 +37,7 @@ export default async ({ expressApp }) => {
         })
 
         const userModel = { name: 'User', model: model.User };
+        const vehicleModel = { name: 'Vehicle', model: model.Vehicle };
 
 
         // now load the dependency injector 
@@ -44,7 +45,8 @@ export default async ({ expressApp }) => {
         // its not necessary for this assignment as mentioned in pdf, but using DI to show how it may be useful for writing test cases
         await dependencyInjectorLoader({
             models: [
-                userModel
+                userModel,
+                vehicleModel
             ],
         });
 

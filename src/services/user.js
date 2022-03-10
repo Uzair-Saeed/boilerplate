@@ -24,6 +24,7 @@ export default class UserService {
 
     async AddNew(input) {
         try {
+            Logger.info("Success");
             let user = await model.User.findOne({ where: { email: input.email }, attributes: ['id'] })
             if (!user) {
 
@@ -89,7 +90,12 @@ export default class UserService {
         try {
             // check if email exist
             let user = await model.User.findOne({
-                where: { email: email }
+                where: { email: email }, include: [
+                    {
+                        model: model.Vehicle,
+                        as: 'vehicles'
+                    }
+                ]
             });
 
             if (!user || !user.salt || !user.hashedPassword) {

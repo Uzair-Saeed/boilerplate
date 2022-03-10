@@ -66,7 +66,7 @@ export default class User extends Model {
             { name: "email" },
           ]
         }
-      ]
+      ],
     });
     return User;
   }
