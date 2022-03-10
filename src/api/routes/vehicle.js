@@ -35,6 +35,36 @@ export default (app) => {
             return next(e);
         }
     });
+    route.post('/bulkAddVehicle', general.tokenDecrypt, passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+        try {
+            let inputData = req.body;
+            inputData = { ...inputData, userId: req.user.id }
+
+            const model = Container.get('Vehicle');
+            const instance = new vehicleService(model, logger);
+            const data = await instance.BulkAddCars(inputData);
+
+            return res.success(data);
+        } catch (e) {
+            logger.error('🔥 error: %o', e);
+            return next(e);
+        }
+    });
+    route.post('/bulkUpdateVehicle', general.tokenDecrypt, passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+        try {
+            let inputData = req.body;
+            inputData = { ...inputData, userId: req.user.id }
+
+            const model = Container.get('Vehicle');
+            const instance = new vehicleService(model, logger);
+            const data = await instance.BulkUpdateCars(inputData);
+
+            return res.success(data);
+        } catch (e) {
+            logger.error('🔥 error: %o', e);
+            return next(e);
+        }
+    });
     route.get('/viewCars', general.tokenDecrypt, passport.authenticate('jwt', { session: false }), async (req, res, next) => {
         try {
 

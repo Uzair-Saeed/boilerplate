@@ -1,6 +1,6 @@
 import sequelize from '../models/index.js';
 import initModels from "../models/init-models.js";
-import seq from 'sequelize';
+import seq, { where } from 'sequelize';
 import _ from 'lodash';
 import { Container } from 'typedi';
 import helpingService from './helping.service.js';
@@ -90,12 +90,7 @@ export default class UserService {
         try {
             // check if email exist
             let user = await model.User.findOne({
-                where: { email: email }, include: [
-                    {
-                        model: model.Vehicle,
-                        as: 'vehicles'
-                    }
-                ]
+                where: { email: email }
             });
 
             if (!user || !user.salt || !user.hashedPassword) {
@@ -165,10 +160,16 @@ export default class UserService {
             let userData = {}
             // check if email exist
             let user = await model.User.findOne({
-                where: { id }
+                where: { id }, include: [
+                    {
+                        model: model.Vehicle,
+                        as: 'vehicles',
+                        required: false
+                    }
+                ]
             });
-
-            userData.userInfo = user
+            userData.userInfo = user;
+            userData.vehicles = user.vehicles;
             const tokenData = {
                 id: userData.userInfo.id,
                 name: userData.userInfo.name,
